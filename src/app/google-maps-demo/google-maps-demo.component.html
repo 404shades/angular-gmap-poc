@@ -1,0 +1,19 @@
+<!-- google-maps-demo.component.html -->
+
+<div *ngIf="apiLoaded | async" class="box">
+  <google-map height="100vh" width="100vw" [center]="center" [zoom]="zoom">
+    <map-polyline [path]="vertices" [options]="polylineOptions"></map-polyline>
+    <map-marker
+      #marker="mapMarker"
+      *ngFor="let markerPosition of markerPositions"
+      [position]="markerPosition"
+      [options]="markerOptions"
+      (mapClick)="openInfoWindow(marker)"
+    ></map-marker>
+
+    <map-info-window>
+      Total distance: {{ totalDistance | number : "1.2-2" }} km <br />
+      Average speed: {{ averageSpeed | number : "1.2-2" }} km/h
+    </map-info-window>
+  </google-map>
+</div>
