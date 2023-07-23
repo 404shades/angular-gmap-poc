@@ -65,7 +65,7 @@ export class GoogleMapsDemoComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       if (params && params['code']) {
         this.httpClient.get(`http://api-dev.realapps.in/staff/operations/location-tracking/${params['code'] ?? 'EMP6363'}`).pipe(
-          map((data: LocationTrackingRequest) => data.response_data?.data ?? [])
+          map((data: LocationTrackingRequest) => (data.response_data?.data ?? []).filter((a=>(a.accuracy??0)<6)))
         ).subscribe((data) => {
           this.locations = data;
           if (this.locations.length > 0) {
